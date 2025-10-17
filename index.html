@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiteFolio - Portfolio Builder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fira Code', 'JetBrains Mono', 'Source Code Pro', monospace;
+            background: #000000;
+            color: #ffffff;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+
+        .top-bar {
+            background: #111111;
+            padding: 20px 30px;
+            border-bottom: 2px solid #333;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            color: #FFFFFF;
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .header-subtitle {
+            color: #888;
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .github-btn {
+            background: #333;
+            color: #fff;
+            padding: 8px 16px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .github-btn:hover {
+            background: #444;
+        }
+
+        .header-section {
+            background: #111111;
+            padding: 30px;
+            border-bottom: 1px solid #333;
+            text-align: center;
+        }
+
+        .header-content h2 {
+            color: #FFFFFF;
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .header-content p {
+            color: #FFFFFF;
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+            min-height: calc(100% - 60px);
+        }
+
+        .left-panel {
+            width: 50%;
+            background: #111111;
+            padding: 20px;
+            border-right: 1px solid #333;
+            overflow-y: auto;
+        }
+
+        .right-panel {
+            width: 50%;
+            background: #000000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h3 {
+            color: #FFFFFF;
+            margin-bottom: 15px;
+            font-size: 16px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            color: #FFFFFF;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            background: #222;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #00FF00;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn {
+            background: #333;
+            color: #fff;
+            border: 1px solid #555;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: #444;
+        }
+
+        .btn-primary {
+            background: #00FF00;
+            color: #000;
+            border-color: #00FF00;
+        }
+
+        .btn-primary:hover {
+            background: #00CC00;
+        }
+
+        .skills-container, .social-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .tag {
+            background: #333;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tag .remove {
+            cursor: pointer;
+            color: #ff4444;
+        }
+
+        .projects-list {
+            margin-top: 15px;
+        }
+
+        .project-item {
+            background: #222;
+            border: 1px solid #444;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .project-item input, .project-item textarea {
+            margin-bottom: 10px;
+        }
+
+        .remove-project {
+            background: #ff4444;
+            border-color: #ff4444;
+            color: #fff;
+        }
+
+        .remove-project:hover {
+            background: #ff6666;
+        }
+
+        /* Preview Styles */
+        .preview {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .preview-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .preview-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background: #333;
+            border: 2px solid #00FF00;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        .preview-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-name {
+            color: #FFFFFF;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .preview-tagline {
+            color: #FFFFFF;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .preview-section {
+            margin-bottom: 40px;
+        }
+
+        .preview-section h3 {
+            color: #FFFFFF;
+            font-size: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+        }
+
+        .preview-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .preview-skill {
+            background: #333;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            border: 1px solid #555;
+            transition: background 0.2s;
+        }
+
+        .preview-skill:hover {
+            background: #444;
+        }
+
+        .preview-projects {
+            display: grid;
+            gap: 20px;
+        }
+
+        .preview-project {
+            background: #111;
+            border: 1px solid #333;
+            padding: 20px;
+            border-radius: 4px;
+            transition: border-color 0.2s;
+        }
+
+        .preview-project:hover {
+            border-color: #555;
+        }
+
+        .preview-project h4 {
+            color: #FFFFFF;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .preview-project p {
+            color: #FFFFFF;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .preview-project a {
+            color: #00FF00;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .preview-project a:hover {
+            border-bottom-color: #00FF00;
+        }
+
+        .preview-social {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .preview-social a {
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 16px;
+            background: #333;
+            border: 1px solid #555;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .preview-social a:hover {
+            background: #444;
+        }
+
+        .preview-footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .copy-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .left-panel, .right-panel {
+                width: 100%;
+            }
+            
+            .left-panel {
+                border-right: none;
+                border-bottom: 1px solid #333;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-bar">
+            <h1 class="logo">LiteFolio</h1>
+            <div class="header-subtitle">Portfolio Builder</div>
+        </div>
+
+        <div class="header-section">
+            <div class="header-content">
+                <h2>LiteFolio</h2>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="left-panel">
+                <div class="section">
+                    <h3>Personal Info</h3>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" placeholder="John Doe" value="Alex Chen">
+                    </div>
+                    <div class="form-group">
+                        <label for="tagline">Tagline/Bio</label>
+                        <textarea id="tagline" placeholder="Full-stack developer passionate about clean code">Full-stack developer passionate about building scalable web applications and clean, maintainable code.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="avatar">Profile Image URL</label>
+                        <input type="url" id="avatar" placeholder="https://example.com/avatar.jpg">
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Text Colors</h3>
+                    <div class="form-group">
+                        <label for="page-text-color">Page Text Color</label>
+                        <select id="page-text-color" onchange="updatePreview()">
+                            <option value="#FFFFFF" selected>White</option>
+                            <option value="#00FF00">Green</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="heading-color">Heading Color</label>
+                        <select id="heading-color" onchange="updatePreview()">
+                            <option value="#FFFFFF" selected>White</option>
+                            <option value="#00FF00">Green</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="body-color">Body Text Color</label>
+                        <select id="body-color" onchange="updatePreview()">
+                            <option value="#FFFFFF" selected>White</option>
+                            <option value="#00FF00">Green</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Skills</h3>
+                    <div class="form-group">
+                        <label for="skill-input">Add Skill</label>
+                        <input type="text" id="skill-input" placeholder="JavaScript">
+                        <button class="btn" onclick="addSkill()" style="margin-top: 8px;">Add Skill</button>
+                    </div>
+                    <div class="skills-container" id="skills-container">
+                        <div class="tag">JavaScript <span class="remove" onclick="removeSkill(this)">×</span></div>
+                        <div class="tag">React <span class="remove" onclick="removeSkill(this)">×</span></div>
+                        <div class="tag">Node.js <span class="remove" onclick="removeSkill(this)">×</span></div>
+                        <div class="tag">Python <span class="remove" onclick="removeSkill(this)">×</span></div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Projects</h3>
+                    <button class="btn" onclick="addProject()">Add Project</button>
+                    <div class="projects-list" id="projects-list">
+                        <div class="project-item">
+                            <input type="text" placeholder="Project Title" value="E-commerce Platform" onchange="updatePreview()">
+                            <textarea placeholder="Project Description" onchange="updatePreview()">Built a full-stack e-commerce platform using React, Node.js, and MongoDB. Features include user authentication, payment processing, and admin dashboard.</textarea>
+                            <input type="url" placeholder="Project Link" value="https://github.com/alexchen/ecommerce" onchange="updatePreview()">
+                            <button class="btn remove-project" onclick="removeProject(this)">Remove</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Social Links</h3>
+                    <div class="form-group">
+                        <label for="social-input">Add Social Link</label>
+                        <input type="text" id="social-input" placeholder="GitHub: https://github.com/username">
+                        <button class="btn" onclick="addSocial()" style="margin-top: 8px;">Add Link</button>
+                    </div>
+                    <div class="social-container" id="social-container">
+                        <div class="tag">GitHub: https://github.com/alexchen <span class="remove" onclick="removeSocial(this)">×</span></div>
+                        <div class="tag">LinkedIn: https://linkedin.com/in/alexchen <span class="remove" onclick="removeSocial(this)">×</span></div>
+                    </div>
+                </div>
+
+                <div class="copy-section">
+                    <button class="btn btn-primary" onclick="copyHTML()">Copy Portfolio HTML</button>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="preview" id="preview">
+                    <div class="preview-header">
+                        <div class="preview-avatar" id="preview-avatar">
+                            No Image
+                        </div>
+                        <h1 class="preview-name" id="preview-name">Alex Chen</h1>
+                        <p class="preview-tagline" id="preview-tagline">Full-stack developer passionate about building scalable web applications and clean, maintainable code.</p>
+                    </div>
+
+                    <div class="preview-section">
+                        <h3>Skills</h3>
+                        <div class="preview-skills" id="preview-skills">
+                            <span class="preview-skill">JavaScript</span>
+                            <span class="preview-skill">React</span>
+                            <span class="preview-skill">Node.js</span>
+                            <span class="preview-skill">Python</span>
+                        </div>
+                    </div>
+
+                    <div class="preview-section">
+                        <h3>Projects</h3>
+                        <div class="preview-projects" id="preview-projects">
+                            <div class="preview-project">
+                                <h4>E-commerce Platform</h4>
+                                <p>Built a full-stack e-commerce platform using React, Node.js, and MongoDB. Features include user authentication, payment processing, and admin dashboard.</p>
+                                <a href="https://github.com/alexchen/ecommerce" target="_blank" rel="noopener noreferrer">View Project</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="preview-section">
+                        <h3>Connect</h3>
+                        <div class="preview-social" id="preview-social">
+                            <a href="https://github.com/alexchen" target="_blank" rel="noopener noreferrer">GitHub</a>
+                            <a href="https://linkedin.com/in/alexchen" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                        </div>
+                    </div>
+
+                    <div class="preview-footer">
+                        Built by LiteFolio
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update preview on input changes
+        document.getElementById('name').addEventListener('input', updatePreview);
+        document.getElementById('tagline').addEventListener('input', updatePreview);
+        document.getElementById('avatar').addEventListener('input', updatePreview);
+
+        function updatePreview() {
+            const name = document.getElementById('name').value || 'Your Name';
+            const tagline = document.getElementById('tagline').value || 'Your tagline here';
+            const avatar = document.getElementById('avatar').value;
+            const pageTextColor = document.getElementById('page-text-color').value;
+            const headingColor = document.getElementById('heading-color').value;
+            const bodyColor = document.getElementById('body-color').value;
+
+            document.getElementById('preview-name').textContent = name;
+            document.getElementById('preview-tagline').textContent = tagline;
+
+            // Apply page-wide text color to all elements
+            const preview = document.getElementById('preview');
+            preview.style.color = pageTextColor;
+
+            // Apply specific color overrides
+            document.getElementById('preview-name').style.color = headingColor;
+            document.getElementById('preview-tagline').style.color = bodyColor;
+            
+            // Update all headings
+            const headings = document.querySelectorAll('#preview h3');
+            headings.forEach(h => h.style.color = headingColor);
+            
+            // Update project titles
+            const projectTitles = document.querySelectorAll('#preview-projects h4');
+            projectTitles.forEach(h => h.style.color = headingColor);
+            
+            // Update project descriptions
+            const projectDescs = document.querySelectorAll('#preview-projects p');
+            projectDescs.forEach(p => p.style.color = bodyColor);
+
+            // Update social links to use page text color
+            const socialLinks = document.querySelectorAll('#preview-social a');
+            socialLinks.forEach(a => a.style.color = pageTextColor);
+
+            // Update skills to use page text color
+            const skills = document.querySelectorAll('.preview-skill');
+            skills.forEach(skill => skill.style.color = pageTextColor);
+
+            // Update footer to use page text color
+            const footer = document.querySelector('.preview-footer');
+            if (footer) footer.style.color = pageTextColor;
+
+            const avatarEl = document.getElementById('preview-avatar');
+            if (avatar) {
+                avatarEl.innerHTML = `<img src="${avatar}" alt="Profile" onerror="this.parentElement.innerHTML='No Image';">`;
+            } else {
+                avatarEl.innerHTML = 'No Image';
+            }
+
+            updateSkillsPreview();
+            updateProjectsPreview();
+            updateSocialPreview();
+        }
+
+        function addSkill() {
+            const input = document.getElementById('skill-input');
+            const skill = input.value.trim();
+            if (skill) {
+                const container = document.getElementById('skills-container');
+                const tag = document.createElement('div');
+                tag.className = 'tag';
+                tag.innerHTML = `${skill} <span class="remove" onclick="removeSkill(this)">×</span>`;
+                container.appendChild(tag);
+                input.value = '';
+                updateSkillsPreview();
+            }
+        }
+
+        function removeSkill(element) {
+            element.parentElement.remove();
+            updateSkillsPreview();
+        }
+
+        function updateSkillsPreview() {
+            const skills = Array.from(document.querySelectorAll('#skills-container .tag')).map(tag => 
+                tag.textContent.replace('×', '').trim()
+            );
+            const pageTextColor = document.getElementById('page-text-color').value;
+            const previewContainer = document.getElementById('preview-skills');
+            previewContainer.innerHTML = skills.map(skill => 
+                `<span class="preview-skill" style="color: ${pageTextColor};">${skill}</span>`
+            ).join('');
+        }
+
+        function addProject() {
+            const container = document.getElementById('projects-list');
+            const projectDiv = document.createElement('div');
+            projectDiv.className = 'project-item';
+            projectDiv.innerHTML = `
+                <input type="text" placeholder="Project Title" onchange="updatePreview()">
+                <textarea placeholder="Project Description" onchange="updatePreview()"></textarea>
+                <input type="url" placeholder="Project Link" onchange="updatePreview()">
+                <button class="btn remove-project" onclick="removeProject(this)">Remove</button>
+            `;
+            container.appendChild(projectDiv);
+            updateProjectsPreview();
+        }
+
+        function removeProject(element) {
+            element.parentElement.remove();
+            updateProjectsPreview();
+        }
+
+        function updateProjectsPreview() {
+            const projects = Array.from(document.querySelectorAll('.project-item')).map(item => {
+                const inputs = item.querySelectorAll('input, textarea');
+                return {
+                    title: inputs[0].value || 'Untitled Project',
+                    description: inputs[1].value || 'No description provided',
+                    link: inputs[2].value || '#'
+                };
+            });
+
+            const headingColor = document.getElementById('heading-color').value;
+            const bodyColor = document.getElementById('body-color').value;
+            const previewContainer = document.getElementById('preview-projects');
+            previewContainer.innerHTML = projects.map(project => `
+                <div class="preview-project">
+                    <h4 style="color: ${headingColor};">${project.title}</h4>
+                    <p style="color: ${bodyColor};">${project.description}</p>
+                    <a href="${project.link}" target="_blank" rel="noopener noreferrer">View Project</a>
+                </div>
+            `).join('');
+        }
+
+        function addSocial() {
+            const input = document.getElementById('social-input');
+            const social = input.value.trim();
+            if (social) {
+                const container = document.getElementById('social-container');
+                const tag = document.createElement('div');
+                tag.className = 'tag';
+                tag.innerHTML = `${social} <span class="remove" onclick="removeSocial(this)">×</span>`;
+                container.appendChild(tag);
+                input.value = '';
+                updateSocialPreview();
+            }
+        }
+
+        function removeSocial(element) {
+            element.parentElement.remove();
+            updateSocialPreview();
+        }
+
+        function updateSocialPreview() {
+            const socials = Array.from(document.querySelectorAll('#social-container .tag')).map(tag => {
+                const text = tag.textContent.replace('×', '').trim();
+                const parts = text.split(': ');
+                return {
+                    name: parts[0] || 'Link',
+                    url: parts[1] || '#'
+                };
+            });
+
+            const pageTextColor = document.getElementById('page-text-color').value;
+            const previewContainer = document.getElementById('preview-social');
+            previewContainer.innerHTML = socials.map(social => 
+                `<a href="${social.url}" target="_blank" rel="noopener noreferrer" style="color: ${pageTextColor};">${social.name}</a>`
+            ).join('');
+        }
+
+        function copyHTML() {
+            const name = document.getElementById('name').value || 'Your Name';
+            const tagline = document.getElementById('tagline').value || 'Your tagline here';
+            const avatar = document.getElementById('avatar').value;
+            const pageTextColor = document.getElementById('page-text-color').value;
+            const headingColor = document.getElementById('heading-color').value;
+            const bodyColor = document.getElementById('body-color').value;
+
+            const skills = Array.from(document.querySelectorAll('#skills-container .tag')).map(tag => 
+                tag.textContent.replace('×', '').trim()
+            );
+
+            const projects = Array.from(document.querySelectorAll('.project-item')).map(item => {
+                const inputs = item.querySelectorAll('input, textarea');
+                return {
+                    title: inputs[0].value || 'Untitled Project',
+                    description: inputs[1].value || 'No description provided',
+                    link: inputs[2].value || '#'
+                };
+            });
+
+            const socials = Array.from(document.querySelectorAll('#social-container .tag')).map(tag => {
+                const text = tag.textContent.replace('×', '').trim();
+                const parts = text.split(': ');
+                return {
+                    name: parts[0] || 'Link',
+                    url: parts[1] || '#'
+                };
+            });
+
+            const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${name} - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Fira Code', monospace; background: #000; color: ${pageTextColor}; line-height: 1.6; padding: 40px 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 60px; }
+        .avatar { width: 120px; height: 120px; border-radius: 50%; margin: 0 auto 20px; background: #333; border: 2px solid #00FF00; overflow: hidden; display: flex; align-items: center; justify-content: center; color: #666; }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .name { color: ${headingColor}; font-size: 32px; margin-bottom: 10px; }
+        .tagline { color: ${bodyColor}; font-size: 18px; margin-bottom: 20px; }
+        .section { margin-bottom: 50px; }
+        .section h2 { color: ${headingColor}; font-size: 24px; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 8px; }
+        .skills { display: flex; flex-wrap: wrap; gap: 10px; }
+        .skill { background: #333; color: #fff; padding: 8px 16px; border-radius: 4px; border: 1px solid #555; }
+        .projects { display: grid; gap: 20px; }
+        .project { background: #111; border: 1px solid #333; padding: 20px; border-radius: 4px; }
+        .project h3 { color: ${headingColor}; margin-bottom: 10px; font-size: 20px; }
+        .project p { color: ${bodyColor}; margin-bottom: 15px; }
+        .project a { color: #00FF00; text-decoration: none; }
+        .project a:hover { text-decoration: underline; }
+        .social { display: flex; flex-wrap: wrap; gap: 15px; }
+        .social a { color: ${pageTextColor}; text-decoration: none; padding: 10px 20px; background: #333; border: 1px solid #555; border-radius: 4px; }
+        .social a:hover { background: #444; }
+        .footer { text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid #333; color: #666; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="avatar">${avatar ? `<img src="${avatar}" alt="Profile">` : 'No Image'}</div>
+            <h1 class="name">${name}</h1>
+            <p class="tagline">${tagline}</p>
+        </div>
+        
+        <div class="section">
+            <h2>Skills</h2>
+            <div class="skills">
+                ${skills.map(skill => `<span class="skill">${skill}</span>`).join('')}
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Projects</h2>
+            <div class="projects">
+                ${projects.map(project => `
+                    <div class="project">
+                        <h3>${project.title}</h3>
+                        <p>${project.description}</p>
+                        <a href="${project.link}" target="_blank" rel="noopener noreferrer">View Project</a>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>Connect</h2>
+            <div class="social">
+                ${socials.map(social => `<a href="${social.url}" target="_blank" rel="noopener noreferrer">${social.name}</a>`).join('')}
+            </div>
+        </div>
+        
+        <div class="footer">Built by LiteFolio</div>
+    </div>
+</body>
+</html>`;
+
+            navigator.clipboard.writeText(html).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.style.background = '#00CC00';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#00FF00';
+                }, 2000);
+            });
+        }
+
+        // Handle Enter key for adding skills and social links
+        document.getElementById('skill-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addSkill();
+            }
+        });
+
+        document.getElementById('social-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addSocial();
+            }
+        });
+
+        // Initialize preview
+        updatePreview();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99012bbf42faca8c',t:'MTc2MDcxODUyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
