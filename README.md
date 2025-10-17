@@ -5,7 +5,7 @@ LiteFolio is a free, open-source portfolio builder designed for developers, CS s
 
 🔹 Live Demo
 
-Create your portfolio : [LiteFolio](https://azmaldev.github.io/litefolio/)
+Create your portfolio : [LiteFolio](https://azmaldev.github.io/litefolio)
 
 ---
 
