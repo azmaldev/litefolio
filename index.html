@@ -71,28 +71,6 @@
             background: #444;
         }
 
-        .header-section {
-            background: #111111;
-            padding: 30px;
-            border-bottom: 1px solid #333;
-            text-align: center;
-        }
-
-        .header-content h2 {
-            color: #FFFFFF;
-            font-size: 24px;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .header-content p {
-            color: #FFFFFF;
-            font-size: 16px;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.5;
-        }
-
         .main-content {
             display: flex;
             flex: 1;
@@ -377,10 +355,37 @@
             font-size: 12px;
         }
 
+        .preview-footer a {
+            color: #00FF00;
+            text-decoration: none;
+        }
+
+        .preview-footer a:hover {
+            text-decoration: underline;
+        }
+
         .copy-section {
             margin-top: 30px;
             padding-top: 20px;
             border-top: 1px solid #333;
+        }
+
+        .footer {
+            background: #111111;
+            padding: 20px 30px;
+            border-top: 2px solid #333;
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #00FF00;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
         }
 
         @media (max-width: 768px) {
@@ -404,12 +409,7 @@
         <div class="top-bar">
             <h1 class="logo">LiteFolio</h1>
             <div class="header-subtitle">Portfolio Builder</div>
-        </div>
-
-        <div class="header-section">
-            <div class="header-content">
-                <h2>LiteFolio</h2>
-            </div>
+            <a href="https://github.com/azmaldev/litefolio" class="github-btn" target="_blank">GitHub</a>
         </div>
 
         <div class="main-content">
@@ -541,10 +541,14 @@
                     </div>
 
                     <div class="preview-footer">
-                        Built by LiteFolio
+                        Built by <a href="https://github.com/azmaldev/litefolio" target="_blank">LiteFolio</a>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="footer">
+            Built by <a href="https://github.com/azmaldev/litefolio" target="_blank">LiteFolio</a>
         </div>
     </div>
 
@@ -595,7 +599,14 @@
 
             // Update footer to use page text color
             const footer = document.querySelector('.preview-footer');
-            if (footer) footer.style.color = pageTextColor;
+            if (footer) {
+                footer.style.color = pageTextColor;
+                // Update footer link color
+                const footerLink = footer.querySelector('a');
+                if (footerLink) {
+                    footerLink.style.color = '#00FF00';
+                }
+            }
 
             const avatarEl = document.getElementById('preview-avatar');
             if (avatar) {
@@ -776,6 +787,8 @@
         .social a { color: ${pageTextColor}; text-decoration: none; padding: 10px 20px; background: #333; border: 1px solid #555; border-radius: 4px; }
         .social a:hover { background: #444; }
         .footer { text-align: center; margin-top: 60px; padding-top: 20px; border-top: 1px solid #333; color: #666; font-size: 12px; }
+        .footer a { color: #00FF00; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -813,7 +826,7 @@
             </div>
         </div>
         
-        <div class="footer">Built by LiteFolio</div>
+        <div class="footer">Built by <a href="https://github.com/azmaldev/litefolio" target="_blank">LiteFolio</a></div>
     </div>
 </body>
 </html>`;
@@ -848,5 +861,5 @@
         // Initialize preview
         updatePreview();
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99012bbf42faca8c',t:'MTc2MDcxODUyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
